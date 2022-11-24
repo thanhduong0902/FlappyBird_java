@@ -89,7 +89,7 @@ public class ChimneyGroup {
             int deltaY = getRandomY();
             cn = new Chimney(830+i*distance,bottomChimneyY +deltaY,74,400);
             chimneys.push(cn);
-            pl = new Plant(830+i*distance-10,bottomChimneyY+deltaY-100,74,100);
+            pl = new Plant(830+i*distance-10,bottomChimneyY+deltaY,74,100);
             plants.push(pl);
             
             
@@ -102,12 +102,15 @@ public class ChimneyGroup {
     
     public void update(){
         for(int i=0;i<SIZE;i++){
+            System.out.printf("%d %d", (int)plants.get(i).getPosY(), (int)chimneys.get(i).getPosY());
             chimneys.get(i).update();
             plants.get(i).update();
+            if((int)plants.get(i).getPosY()+100==(int)chimneys.get(i).getPosY()) plants.get(i).setGrow(false);
             if(i%2==0 && plants.get(i).getGrow())
                 plants.get(i).update2();
             
         }
+        
         
 //            int a = getRandomX();
 //            if(a%2==0)

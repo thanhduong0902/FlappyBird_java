@@ -88,7 +88,7 @@ public class FlappyBirds extends GameScreen{
             chimneyGroup.update();
             
             for(int i = 0;i<ChimneyGroup.SIZE;i++){
-                if(bird.getRect().intersects(chimneyGroup.getChimney(i).getRect())){
+                if(bird.getRect().intersects(chimneyGroup.getChimney(i).getRect())||bird.getRect().intersects(chimneyGroup.getPlant(i).getRect()) ){
                     if(bird.getLive()) bird.bupSound.play();
                     bird.setLive(false);
                     bird.setVt(20);
@@ -99,8 +99,12 @@ public class FlappyBirds extends GameScreen{
             }
             
             for(int i = 0;i<ChimneyGroup.SIZE;i++){
-                if((int)chimneyGroup.getPlant(i).getPosX()-bird.getPosX()==50){
+                if((int)chimneyGroup.getPlant(i).getPosX()-bird.getPosX()==50&&Point>10){
                     chimneyGroup.getPlant(i).setGrow(true);
+                }
+                if((int)chimneyGroup.getPlant(i).getPosY()==((int)bird.getPosY()+bird.getH())||(int)chimneyGroup.getPlant(i).getPosX()+
+                        (int)chimneyGroup.getPlant(i).getW()<(int)bird.getPosX()) {
+                    chimneyGroup.getPlant(i).setGrow(false);
                 }
                 if(bird.getPosX() > chimneyGroup.getChimney(i).getPosX() && !chimneyGroup.getChimney(i).getIsBehindBird()
                         && i%2==0){
