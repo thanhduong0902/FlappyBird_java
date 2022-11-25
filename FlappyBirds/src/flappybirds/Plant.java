@@ -37,6 +37,11 @@ public class Plant extends Objects {
 
         rect.setLocation((int) this.getPosX(), (int) this.getPosY());
     }
+    public void update3(){
+        setPosY(getPosY()+5*vt);
+        
+        rect.setLocation((int) this.getPosX(), (int) this.getPosY());
+    }
 
     public void stop() {
         setPosY(getPosY());

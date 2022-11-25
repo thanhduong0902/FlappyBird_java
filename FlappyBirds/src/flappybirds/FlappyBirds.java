@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import pkg2dgamesframework.AFrameOnImage;
 import pkg2dgamesframework.Animation;
@@ -70,9 +71,17 @@ public class FlappyBirds extends GameScreen{
     private void resetGame(){
         bird.setPos(350, 250);
         bird.setVt(0);
+        
         bird.setLive(true);
         Point = 0;
         chimneyGroup.resetChimneys();
+    }
+    public int getRandomX() {
+        Random random = new Random();
+        int z;
+        z = random.nextInt(6);
+
+        return z;
     }
     
     @Override
@@ -94,21 +103,30 @@ public class FlappyBirds extends GameScreen{
                     bird.setVt(20);
                     
                 }
-                    
+                
                 
             }
-            
-            for(int i = 0;i<ChimneyGroup.SIZE;i++){
-                if((int)chimneyGroup.getPlant(i).getPosX()-bird.getPosX()==50&&Point>10){
-                    chimneyGroup.getPlant(i).setGrow(true);
+
+                int a = getRandomX();
+                if((int)chimneyGroup.getPlant(a).getPosX()-bird.getPosX()==50&&Point>10&&Point<25){
+                    chimneyGroup.getPlant(a).setGrow(true);
                 }
+                for(int i = 0;i<ChimneyGroup.SIZE;i++){
                 if((int)chimneyGroup.getPlant(i).getPosY()==((int)bird.getPosY()+bird.getH())||(int)chimneyGroup.getPlant(i).getPosX()+
                         (int)chimneyGroup.getPlant(i).getW()<(int)bird.getPosX()) {
                     chimneyGroup.getPlant(i).setGrow(false);
                 }
+                
+                
                 if(bird.getPosX() > chimneyGroup.getChimney(i).getPosX() && !chimneyGroup.getChimney(i).getIsBehindBird()
                         && i%2==0){
                     Point ++;
+                if(Point>10){
+                    try{
+                        birds = ImageIO.read(new File("Assets/bird_sprite2.png"));
+                    }
+                    catch(IOException ex){}
+                }
                     bird.getMoneySound.play();
                     chimneyGroup.getChimney(i).setIsBehindBird(true);
                 }
